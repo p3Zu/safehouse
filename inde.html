@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Gate</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #eef2ff;
+      font-family: Arial, sans-serif;
+    }
+
+    .otp-box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      text-align: center;
+      width: 320px;
+    }
+
+    .otp-box h2 {
+      margin-top: 0;
+    }
+
+    .otp {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .otp input {
+      width: 50px;
+      height: 60px;
+      font-size: 24px;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .otp input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #dc2626;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="otp-box">
+    <h2>Enter Secret Code</h2>
+
+    <div class="otp">
+      <input type="text" maxlength="1" inputmode="numeric" />
+      <input type="text" maxlength="1" inputmode="numeric" />
+      <input type="text" maxlength="1" inputmode="numeric" />
+      <input type="text" maxlength="1" inputmode="numeric" />
+    </div>
+
+    <button onclick="checkCode()">Open Site</button>
+    <div class="message" id="message">hint: prve rande</div>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll(".otp input");
+    const message = document.getElementById("message");
+
+    // Change this to any 4-digit code you like
+    const correctCode = "1402";
+
+    inputs.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        // allow only digits
+        input.value = input.value.replace(/[^0-9]/g, "");
+        // auto-focus next field
+        if (input.value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        // backspace auto-focus previous
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+
+    function checkCode() {
+      const enteredCode = Array.from(inputs)
+        .map(input => input.value)
+        .join("");
+
+      if (enteredCode === correctCode) {
+        // Redirect to your love-letter page
+        window.location.href = "page2.html";
+      } else {
+        message.textContent = "Wrong code.";
+      }
+    }
+  </script>
+</body>
+</html>
